@@ -1,0 +1,20 @@
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 10
+          fetch-tags: true
+      - name: Validate YAML file
+        run: yamllint action.yml
+      - name: Tag
+        uses: martoc/action-tag@v0
+      - name: Release on GitHub
+        uses: martoc/action-release@main
