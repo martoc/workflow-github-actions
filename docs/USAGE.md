@@ -13,20 +13,28 @@ to CI/CD across repositories.
 A reusable workflow that can be called from other repositories. It performs the following steps:
 
 1. **Checkout** - Clones the repository with fetch depth of 10 and fetches tags
-2. **Validate** - Runs `make validate` to execute project-specific validation
-3. **Tag** - Creates version tags using [martoc/action-tag](https://github.com/martoc/action-tag)
-4. **Release** - Creates GitHub releases using [martoc/action-release](https://github.com/martoc/action-release)
+2. **Init** - Runs `make init` to execute project-specific initialisation (e.g., installing dependencies)
+3. **Validate** - Runs `make validate` to execute project-specific validation
+4. **Tag** - Creates version tags using [martoc/action-tag](https://github.com/martoc/action-tag)
+5. **Release** - Creates GitHub releases using [martoc/action-release](https://github.com/martoc/action-release)
 
 ## Prerequisites
 
 ### Makefile Requirements
 
-Your repository must have a `Makefile` with a `validate` target. This target should contain
-your project-specific validation logic (linting, testing, etc.).
+Your repository must have a `Makefile` with `init` and `validate` targets:
+
+- **init** - Initialisation logic (e.g., installing dependencies, setting up tools)
+- **validate** - Validation logic (e.g., linting, testing)
 
 Example `Makefile`:
 
 ```makefile
+.PHONY: init
+init:
+	pip install yamllint
+	# Add other initialisation commands as needed
+
 .PHONY: validate
 validate:
 	yamllint *.yml
@@ -75,13 +83,14 @@ These have been replaced with the single `deploy.yml` reusable workflow.
 
 ### Key Changes
 
-1. **Make-based validation** - Validation is now performed via `make validate` instead of
-   inline commands like `yamllint action.yml`
+1. **Make-based workflow** - Initialisation and validation are now performed via `make init`
+   and `make validate` instead of inline commands
 2. **Single workflow** - All previous workflows consolidated into `deploy.yml`
 3. **Updated checkout action** - Uses `actions/checkout@v6`
 
 ### Migration Steps
 
-1. Ensure your repository has a `Makefile` with a `validate` target
+1. Ensure your repository has a `Makefile` with `init` and `validate` targets
 2. Update your workflow to call `deploy.yml` instead of the previous workflows
-3. Move any inline validation commands to the `validate` target in your `Makefile`
+3. Move any setup/installation commands to the `init` target in your `Makefile`
+4. Move any inline validation commands to the `validate` target in your `Makefile`
