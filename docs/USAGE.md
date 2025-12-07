@@ -3,12 +3,12 @@
 ## Overview
 
 This repository provides reusable GitHub Actions workflows for tagging and releasing projects.
-The `deploy.yml` workflow uses Make targets for validation, providing a standardised approach
+The `publish.yml` workflow uses Make targets for validation, providing a standardised approach
 to CI/CD across repositories.
 
 ## Available Workflows
 
-### deploy.yml (Reusable Workflow)
+### publish.yml (Reusable Workflow)
 
 A reusable workflow that can be called from other repositories. It performs the following steps:
 
@@ -47,7 +47,7 @@ The workflow requires `contents: write` permission to create tags and releases.
 
 ## Example
 
-To use the `deploy.yml` workflow in your repository, create a workflow file that calls it:
+To use the `publish.yml` workflow in your repository, create a workflow file that calls it:
 
 ```yaml
 ---
@@ -62,8 +62,8 @@ on:
       - main
 
 jobs:
-  deploy:
-    uses: martoc/workflow-github-actions/.github/workflows/deploy.yml@main
+  publish:
+    uses: martoc/workflow-github-actions/.github/workflows/publish.yml@main
     permissions:
       contents: write
 ```
@@ -75,22 +75,23 @@ The following workflows have been removed:
 
 * `action.yml`
 * `default.yml`
+* `deploy.yml`
 * `github-actions.yml`
 * `tag.yml`
 * `workflow.yml`
 
-These have been replaced with the single `deploy.yml` reusable workflow.
+These have been replaced with the single `publish.yml` reusable workflow.
 
 ### Key Changes
 
 1. **Make-based workflow** - Initialisation and validation are now performed via `make init`
    and `make validate` instead of inline commands
-2. **Single workflow** - All previous workflows consolidated into `deploy.yml`
+2. **Single workflow** - All previous workflows consolidated into `publish.yml`
 3. **Updated checkout action** - Uses `actions/checkout@v6`
 
 ### Migration Steps
 
 1. Ensure your repository has a `Makefile` with `init` and `validate` targets
-2. Update your workflow to call `deploy.yml` instead of the previous workflows
+2. Update your workflow to call `publish.yml` instead of the previous workflows
 3. Move any setup/installation commands to the `init` target in your `Makefile`
 4. Move any inline validation commands to the `validate` target in your `Makefile`
