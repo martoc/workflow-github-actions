@@ -1,5 +1,4 @@
 # Table of Content
 
-* [Introduction](./INTRODUCTION.md)
 * [Code Style](./CODESTYLE.md)
-
+* [Usage](./USAGE.md)
