@@ -12,6 +12,8 @@ jobs:
         with:
           fetch-depth: 10
           fetch-tags: true
+      - name: Init
+        run: make init
       - name: Validate
         run: make validate
       - name: Tag
