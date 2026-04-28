@@ -17,6 +17,6 @@ jobs:
       - name: Validate
         run: make validate
       - name: Tag
-        uses: martoc/action-tag@819bfd3820d0486b24a6cca70c82a1f0e49120bf
+        uses: martoc/action-tag@5f190712b812e799c8d5525b57473714f05ba1ff
       - name: Release on GitHub
         uses: martoc/action-release@v0
