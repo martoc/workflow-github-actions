@@ -21,6 +21,6 @@ jobs:
           fetch-depth: 10
           fetch-tags: true
       - name: Tag
-        uses: martoc/action-tag@2882cc10e20d6ff4fe1585eddce56481c87ff5cf
+        uses: martoc/action-tag@d1426274e546994413987dba1637c80f63f32d54
       - name: Release on GitHub
         uses: martoc/action-release@v0
